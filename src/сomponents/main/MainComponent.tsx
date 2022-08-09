@@ -1,8 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import HeaderComponent from "./header/HeaderComponent";
-import ArticlesComponent from "./articles/ArticlesComponent";
-import ArticlesComponentObserver from "./articles/ArticlesComponent";
+import HeaderComponent from "./HeaderComponent";
+import ArticlesComponent from "./ArticlesComponent";
+import ArticlesComponentObserver from "./ArticlesComponent";
 
 
 const MainComponent = () => {

@@ -1,6 +1,6 @@
 import React, {FC} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {ColorPalette} from "../../ColorPalette";
+import {ColorPalette} from "../ColorPalette";
 
 
 interface props {
@@ -9,9 +9,6 @@ interface props {
 }
 
 const ArticleComponent: FC<props> = ({title, description}) => {
-
-
-
     return (
         <View style={styles.article}>
             <Text style={styles.title}>{title}</Text>
@@ -23,7 +20,7 @@ const ArticleComponent: FC<props> = ({title, description}) => {
 
 const styles = StyleSheet.create({
     article: {
-        marginTop: 40,
+        marginBottom: 40,
         backgroundColor: ColorPalette.SoftWhite,
         borderRadius: 20,
         padding: 10,
@@ -36,13 +33,17 @@ const styles = StyleSheet.create({
         textAlign: "center",
         fontFamily: "Bold",
         color: ColorPalette.Burgundy,
+        fontSize: 18,
+        paddingVertical: 5
     },
 
     description: {
-        padding: 10,
+        paddingHorizontal: 5,
+        paddingVertical: 5,
         marginBottom: 10,
         fontFamily: "Regular",
-
+        textAlign: "justify",
+        fontSize: 14
     },
 
     readMoreButton: {

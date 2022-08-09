@@ -1,18 +1,10 @@
 import {makeAutoObservable} from "mobx";
+import {Article} from "../models/Article";
+import {ArticlesService} from "../services/ArticlesService";
 
-interface Article{
-    title: string;
-    description: string;
-}
 
-interface ArticleResponse{
-    status: string,
-    totalResult: number,
-    articles: Article[]
-}
 
 class ArticlesStore {
-
     private _articlesAmount = 0;
     private _articles: Article[] = [];
 
@@ -21,7 +13,11 @@ class ArticlesStore {
         this._articles = [
             {
                 title: "initTitle",
-                description: "initDescription"
+                description: "initDescription",
+                urlToImage: "",
+                author: "",
+                source: {id: 1, name: "a"},
+                publishedAt: ""
             },
         ]
         this._articlesAmount = this.articles.length;
@@ -29,6 +25,7 @@ class ArticlesStore {
 
 
     get articlesAmount(): number {
+        // console.log("_articlesAmount = "+this._articlesAmount);
         return this._articlesAmount;
     }
 

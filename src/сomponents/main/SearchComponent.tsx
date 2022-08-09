@@ -4,23 +4,25 @@ import {
     StyleSheet,
     ImageBackground,
     TouchableOpacity,
-    TouchableHighlight,
-    NativeSyntheticEvent, TextInputFocusEventData
 } from "react-native";
-import {ColorPalette} from "../../ColorPalette";
-import {SearchBlock} from "../../../blocks/SearchBlock";
-import {ArticlesService} from "../../../services/ArticlesService";
+import {ColorPalette} from "../ColorPalette";
+import {SearchBLoC} from "../../BLoCs/SearchBLoC";
+import {ArticlesService} from "../../services/ArticlesService";
 import {useMemo} from "react";
+import articlesStore from "../../store/ArticlesStore";
+import {loadArticles} from "../../api/ArticlesApi";
 
 
 const SearchComponent = () => {
-    const block: SearchBlock = new SearchBlock(new ArticlesService());//useMemo(() => {return new SearchBlock(new ArticlesService())}, [new ArticlesService()]);
+    const {articlesAmount, articles} = articlesStore;
+    const articlesService = useMemo(() => new ArticlesService(loadArticles), []);
+    const BLoC: SearchBLoC = useMemo(() => {return new SearchBLoC(articlesService)}, [articlesAmount, articles]);
 
     return (
         <View style={styles.search}>
             <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}></TextInput>
-            <TouchableOpacity style={styles.searchButton} onPress={block.searchArticles.bind(block)}>
-                <ImageBackground style={styles.searchIcon} source={require('../../../assets/icons/searchIcon.png')} resizeMode='contain'/>
+            <TouchableOpacity style={styles.searchButton} onPress={BLoC.searchArticles.bind(BLoC)}>
+                <ImageBackground style={styles.searchIcon} source={require('../../assets/icons/searchIcon.png')} resizeMode='contain'/>
             </TouchableOpacity>
         </View>
     );
@@ -37,11 +39,11 @@ const styles = StyleSheet.create({
     searchInput: {
         backgroundColor: ColorPalette.SoftWhite,
         width: "55%",
-        height: 36,
+        height: "50%",
         borderRadius: 10,
         textAlign: "center",
         marginRight: "5%",
-        fontSize: 16,
+        fontSize: 18,
         paddingHorizontal:5,
         textAlignVertical: "center",
         fontFamily: "SemiBold"

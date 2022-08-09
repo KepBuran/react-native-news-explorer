@@ -2,6 +2,6 @@ import {Article} from "./Article";
 
 export interface ArticlesResponse{
     status: string,
-    totalResult: number,
+    totalResults: number,
     articles: Article[]
 }

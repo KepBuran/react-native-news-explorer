@@ -1,12 +1,7 @@
 import {ReactElement, useState} from 'react';
 import {TouchableOpacity, StyleSheet, Text, View, Image, ImageBackground, GestureResponderEvent} from "react-native";
-import {ColorPalette} from "../../ColorPalette";
-
-enum SortBy {
-    popularity="Popularity",
-    publishedAt="Publication date",
-    relevancy="Relevancy",
-}
+import {ColorPalette} from "../ColorPalette";
+import {SortBy} from "../../models/SortBy";
 
 const SortMenuComponent = () => {
     const [visible, setVisible] = useState(false);
@@ -15,23 +10,14 @@ const SortMenuComponent = () => {
         setVisible(!visible);
     };
 
-    const renderDropdown = (): ReactElement | undefined => {
-        if (visible) {
-            return (
-                <View style={styles.dropdown}>
-                    <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.popularity}</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.publishedAt}</Text></TouchableOpacity>
-                    <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.relevancy}</Text></TouchableOpacity>
-                </View>
-            );
-        }
-    };
-
-
     return (
         <TouchableOpacity style={visible ? styles.buttonPressed : styles.button}  onPress={toggleDropdown}>
-            {renderDropdown()}
-            <ImageBackground style={{...styles.buttonIcon, ...{}}} source={require('../../../assets/icons/sortBy.png')} resizeMode='contain'/>
+            {visible && <View style={styles.dropdown}>
+                <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.popularity}</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.publishedAt}</Text></TouchableOpacity>
+                <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.relevancy}</Text></TouchableOpacity>
+            </View>}
+            <ImageBackground style={{...styles.buttonIcon, ...{}}} source={require('../../assets/icons/sortBy.png')} resizeMode='contain'/>
         </TouchableOpacity>
     );
 }

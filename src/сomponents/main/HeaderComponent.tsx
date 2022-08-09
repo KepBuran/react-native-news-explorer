@@ -1,6 +1,6 @@
 import {Dimensions, StyleSheet, Text, TextInput, View} from "react-native";
 import {StatusBar} from "expo-status-bar";
-import {ColorPalette} from "../../ColorPalette";
+import {ColorPalette} from "../ColorPalette";
 import SortMenuComponent from "./SortMenuComponent";
 import SearchComponent from "./SearchComponent";
 

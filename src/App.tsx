@@ -1,11 +1,12 @@
 import { StatusBar } from 'expo-status-bar';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import HeaderComponent from "./src/сomponents/main/header/HeaderComponent";
-import ArticlesComponent from "./src/сomponents/main/articles/ArticlesComponent";
-import MainComponent from "./src/сomponents/main/MainComponent";
-import {ColorPalette} from "./src/сomponents/ColorPalette";
+import HeaderComponent from "./сomponents/main/HeaderComponent";
+import ArticlesComponent from "./сomponents/main/ArticlesComponent";
+import MainComponent from "./сomponents/main/MainComponent";
+import {ColorPalette} from "./сomponents/ColorPalette";
 import {
     Raleway_200ExtraLight,
+    Raleway_300Light,
     Raleway_400Regular,
     Raleway_600SemiBold,
     Raleway_700Bold,
@@ -14,7 +15,7 @@ import {
 import AppLoading from "expo-app-loading";
 
 export default function App() {
-    const [fontsLoaded] = useFonts({Raleway_200ExtraLight, Regular: Raleway_400Regular, Bold: Raleway_700Bold, SemiBold: Raleway_600SemiBold});
+    const [fontsLoaded] = useFonts({ExtraLight: Raleway_200ExtraLight, Light: Raleway_300Light, Regular: Raleway_400Regular, Bold: Raleway_700Bold, SemiBold: Raleway_600SemiBold});
 
 
     if (!fontsLoaded) {
