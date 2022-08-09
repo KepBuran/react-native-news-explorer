@@ -7,20 +7,20 @@ import {
 } from "react-native";
 import {ColorPalette} from "../ColorPalette";
 import {SearchBLoC} from "../../BLoCs/SearchBLoC";
-import {ArticlesService} from "../../services/ArticlesService";
-import {useMemo} from "react";
-import articlesStore from "../../store/ArticlesStore";
-import {loadArticles} from "../../api/ArticlesApi";
+import {FC} from "react";
+import {observer} from "mobx-react-lite";
 
 
-const SearchComponent = () => {
-    const {articlesAmount, articles} = articlesStore;
-    const articlesService = useMemo(() => new ArticlesService(loadArticles), []);
-    const BLoC: SearchBLoC = useMemo(() => {return new SearchBLoC(articlesService)}, [articlesAmount, articles]);
+interface SearchProps {
+    BLoC: SearchBLoC,
+}
 
+
+const SearchComponent: FC<SearchProps> = ({BLoC}) => {
+    const {keyWords} = BLoC;
     return (
         <View style={styles.search}>
-            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}></TextInput>
+            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."} value={keyWords} onChangeText={BLoC.setKeyWords}></TextInput>
             <TouchableOpacity style={styles.searchButton} onPress={BLoC.searchArticles.bind(BLoC)}>
                 <ImageBackground style={styles.searchIcon} source={require('../../assets/icons/searchIcon.png')} resizeMode='contain'/>
             </TouchableOpacity>
@@ -70,4 +70,5 @@ const styles = StyleSheet.create({
 
 })
 
-export default SearchComponent;
+
+export default observer(SearchComponent);

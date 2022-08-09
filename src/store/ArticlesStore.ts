@@ -10,22 +10,12 @@ class ArticlesStore {
 
     constructor() {
         makeAutoObservable(this);
-        this._articles = [
-            {
-                title: "initTitle",
-                description: "initDescription",
-                urlToImage: "",
-                author: "",
-                source: {id: 1, name: "a"},
-                publishedAt: ""
-            },
-        ]
+        this._articles = [];
         this._articlesAmount = this.articles.length;
     }
 
 
     get articlesAmount(): number {
-        // console.log("_articlesAmount = "+this._articlesAmount);
         return this._articlesAmount;
     }
 

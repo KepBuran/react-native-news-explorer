@@ -1,9 +1,9 @@
 import { StatusBar } from 'expo-status-bar';
 import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import HeaderComponent from "./сomponents/main/HeaderComponent";
-import ArticlesComponent from "./сomponents/main/ArticlesComponent";
-import MainComponent from "./сomponents/main/MainComponent";
-import {ColorPalette} from "./сomponents/ColorPalette";
+import HeaderComponent from "./src/сomponents/main/HeaderComponent";
+import ArticlesComponent from "./src/сomponents/main/ArticlesComponent";
+import MainComponent from "./src/сomponents/main/MainComponent";
+import {ColorPalette} from "./src/сomponents/ColorPalette";
 import {
     Raleway_200ExtraLight,
     Raleway_300Light,
@@ -13,10 +13,16 @@ import {
     useFonts
 } from "@expo-google-fonts/raleway";
 import AppLoading from "expo-app-loading";
+import {useEffect} from "react";
+import {ArticlesService} from "./src/services/ArticlesService";
+import {loadArticles} from "./src/api/ArticlesApi";
 
 export default function App() {
     const [fontsLoaded] = useFonts({ExtraLight: Raleway_200ExtraLight, Light: Raleway_300Light, Regular: Raleway_400Regular, Bold: Raleway_700Bold, SemiBold: Raleway_600SemiBold});
 
+    useEffect(() => {
+        new ArticlesService(loadArticles).searchArticles();
+    }, []);
 
     if (!fontsLoaded) {
         return <AppLoading></AppLoading>;

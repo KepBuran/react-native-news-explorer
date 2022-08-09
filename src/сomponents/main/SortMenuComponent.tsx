@@ -1,9 +1,23 @@
-import {ReactElement, useState} from 'react';
-import {TouchableOpacity, StyleSheet, Text, View, Image, ImageBackground, GestureResponderEvent} from "react-native";
+import {FC, ReactElement, useState} from 'react';
+import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {ColorPalette} from "../ColorPalette";
 import {SortBy} from "../../models/SortBy";
+import {SearchBLoC} from "../../BLoCs/SearchBLoC";
+import {observer} from "mobx-react-lite";
+import {runInAction} from "mobx";
+import DatesComponent from "./DatesComponent";
+import CategoryComponent from "./CategoryComponent";
 
-const SortMenuComponent = () => {
+interface SortProps {
+    sortBy: SortBy,
+    fromDate: Date,
+    toDate: Date,
+    setSortByHandler: (element: SortBy) => void
+}
+
+
+const SortMenuComponent: FC<SortProps> = ({setSortByHandler ,sortBy, fromDate,toDate}) => {
+
     const [visible, setVisible] = useState(false);
 
     const toggleDropdown = () => {
@@ -12,15 +26,36 @@ const SortMenuComponent = () => {
 
     return (
         <TouchableOpacity style={visible ? styles.buttonPressed : styles.button}  onPress={toggleDropdown}>
-            {visible && <View style={styles.dropdown}>
-                <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.popularity}</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.publishedAt}</Text></TouchableOpacity>
-                <TouchableOpacity style={styles.menuItem}><Text style={styles.menuItemText}>{SortBy.relevancy}</Text></TouchableOpacity>
-            </View>}
+            {visible && <DropDownMenuComponent setSortByHandler={setSortByHandler} sortBy={sortBy} toDate={toDate} fromDate={fromDate}/>}
             <ImageBackground style={{...styles.buttonIcon, ...{}}} source={require('../../assets/icons/sortBy.png')} resizeMode='contain'/>
         </TouchableOpacity>
     );
 }
+
+interface DropDownMenuProps {
+    sortBy: SortBy,
+    fromDate: Date,
+    toDate: Date,
+    setSortByHandler: (element: SortBy) => void
+}
+
+const DropDownMenuComponent: FC<DropDownMenuProps> = observer(({setSortByHandler, sortBy, fromDate,toDate}) => {
+
+              return (<View style={styles.dropdown}>
+                          {Object.values(SortBy).map((element, index) => {
+                              const isActive = (sortByElement: SortBy) => {
+                                      console.log("CategoryComponent#",element,"  BLoC.sortBy",sortBy);
+                                      return sortBy === sortByElement;
+                                      };
+
+                              return <CategoryComponent  setSortByHandler={setSortByHandler}  sortBy={sortBy} element={element} elementIndex={index} isActive={isActive(element)}></CategoryComponent>
+                          })}
+                         <DatesComponent></DatesComponent>
+
+                      </View>)
+          });
+
+const SortMenuComponentObserver = observer(SortMenuComponent);
 
 const styles = StyleSheet.create({
     button: {
@@ -69,21 +104,6 @@ const styles = StyleSheet.create({
         textAlignVertical: "center",
         zIndex: 1,
     },
-
-    menuItem: {
-        justifyContent: "center",
-        width: "100%",
-        height: 40,
-        borderBottomWidth: 2,
-        borderColor: ColorPalette.Burgundy,
-        backgroundColor: ColorPalette.SoftWhite,
-    },
-
-    menuItemText: {
-        textAlign: "center",
-        color: ColorPalette.Black,
-        fontFamily: "Bold"
-    }
 });
 
-export default SortMenuComponent;
+export default SortMenuComponentObserver;

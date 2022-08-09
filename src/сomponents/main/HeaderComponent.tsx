@@ -1,20 +1,32 @@
-import {Dimensions, StyleSheet, Text, TextInput, View} from "react-native";
-import {StatusBar} from "expo-status-bar";
+import {Dimensions, StyleSheet, View} from "react-native";
 import {ColorPalette} from "../ColorPalette";
-import SortMenuComponent from "./SortMenuComponent";
+import SortMenuComponentObserver from "./SortMenuComponent";
 import SearchComponent from "./SearchComponent";
+import articlesStore from "../../store/ArticlesStore";
+import {useEffect, useMemo} from "react";
+import {ArticlesService} from "../../services/ArticlesService";
+import {loadArticles} from "../../api/ArticlesApi";
+import {SearchBLoC} from "../../BLoCs/SearchBLoC";
+import {observer} from "mobx-react-lite";
 
 const HeaderComponent = () => {
+    const {articlesAmount, articles} = articlesStore;
+    const articlesService = useMemo(() => new ArticlesService(loadArticles), []);
+    const BLoC: SearchBLoC = new SearchBLoC(articlesService);
+//     const BLoC: SearchBLoC = useMemo(() => {return new SearchBLoC(articlesService)}, []);
+
     return (
         <View style={styles.header}>
-            <SortMenuComponent></SortMenuComponent>
-            <SearchComponent></SearchComponent>
+            {console.log("Header# BLoC.sortBy="+BLoC.sortBy)}
+            <SortMenuComponentObserver setSortByHandler={BLoC.setSortByHandler.bind(BLoC)}  sortBy={BLoC.sortBy} toDate={BLoC.toDate} fromDate={BLoC.fromDate}></SortMenuComponentObserver>
+            <SearchComponent BLoC={BLoC}></SearchComponent>
         </View>
     );
 }
 
-const width: number = Dimensions.get('window').width;
-const height: number = Dimensions.get('window').height;
+const HeaderComponentObserver = observer(HeaderComponent)
+
+const width = Dimensions.get("screen").width;
 
 const styles = StyleSheet.create({
     header: {
@@ -39,4 +51,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default HeaderComponent;
+export default HeaderComponentObserver;
