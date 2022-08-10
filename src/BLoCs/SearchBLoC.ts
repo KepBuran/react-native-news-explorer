@@ -1,5 +1,5 @@
 import {ArticlesService} from "../services/ArticlesService";
-import {makeAutoObservable, makeObservable, observable, runInAction} from "mobx";
+import {makeAutoObservable, runInAction} from "mobx";
 import {SortBy} from "../models/SortBy";
 import {SearchParameters, defaultSearchParameters} from "../models/SearchParameters";
 
@@ -38,21 +38,20 @@ export class SearchBLoC {
     }
 
 
-    setKeyWordsHandler(keyWords: string) {
-        console.log("keyWords value",keyWords);
+    setKeyWordsHandler = (keyWords: string) => {
         runInAction(() => this._keyWords = keyWords);
     }
 
-    setSortByHandler(sortBy: SortBy) {
+    setSortByHandler = (sortBy: SortBy) => {
         runInAction(() => this._sortBy = sortBy);
     }
 
-    setFromDateHandler(fromDate: Date | undefined) {
+    setFromDateHandler = (fromDate: Date | undefined) => {
         if (fromDate)
             runInAction(() => this._fromDate = fromDate);
     }
 
-    setToDateHandler(toDate: Date | undefined) {
+    setToDateHandler = (toDate: Date | undefined) => {
         if (toDate)
             runInAction(() => this._toDate = toDate);
     }

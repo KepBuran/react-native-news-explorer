@@ -2,7 +2,6 @@ import {ArticlesResponse} from "../models/ArticlesResponse";
 import {ErrorArticlesResponse} from "../models/ErrorArticlesResponse";
 
 
-
 export interface ILoadArticles {
     (parameters: string): Promise<ErrorArticlesResponse | ArticlesResponse>
 }
@@ -22,7 +21,3 @@ export const loadArticles: ILoadArticles = async (parameters: string) => {
         return objectResponse as ArticlesResponse;
 }
 
-// fetch(url).then(response => response)
-//     .then(response => response.json())
-//     .then(data => data as ArticlesResponse)
-//     .catch(err => {throw new Error(err);});

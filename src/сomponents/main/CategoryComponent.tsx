@@ -31,18 +31,18 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: "100%",
         height: 40,
-        borderBottomWidth: 2,
-        borderColor: ColorPalette.Burgundy,
-        backgroundColor: ColorPalette.SoftWhite,
+        borderBottomWidth: 0.5,
+        borderColor: ColorPalette.Black,
+        // backgroundColor: ColorPalette.DustyRose,
     },
 
     activeMenuItem: {
         justifyContent: "center",
         width: "100%",
         height: 40,
-        borderBottomWidth: 2,
+        borderBottomWidth: 1.5,
         borderColor: ColorPalette.Burgundy,
-        backgroundColor: "#b5ff7a",
+        backgroundColor: "#c1fc96",
     },
 
     menuItemText: {

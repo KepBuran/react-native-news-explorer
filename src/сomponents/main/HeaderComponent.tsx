@@ -10,15 +10,14 @@ import {SearchBLoC} from "../../BLoCs/SearchBLoC";
 import {observer} from "mobx-react-lite";
 
 const HeaderComponent = () => {
-    const {articlesAmount, articles} = articlesStore;
     const articlesService = useMemo(() => new ArticlesService(loadArticles), []);
     const BLoC: SearchBLoC = useMemo(() => {return new SearchBLoC(articlesService)}, []);
 
     return (
         <View style={styles.header}>
-            <SortMenuComponent setSortByHandler={BLoC.setSortByHandler.bind(BLoC)} setFromDateHandler={BLoC.setFromDateHandler.bind(BLoC)} setToDateHandler={BLoC.setToDateHandler.bind(BLoC)}
+            <SortMenuComponent setSortByHandler={BLoC.setSortByHandler.bind(BLoC)} setFromDateHandler={BLoC.setFromDateHandler} setToDateHandler={BLoC.setToDateHandler.bind(BLoC)}
                                        sortBy={BLoC.sortBy} toDate={BLoC.toDate} fromDate={BLoC.fromDate} ></SortMenuComponent>
-            <SearchComponent BLoC={BLoC} keyWords={BLoC.keyWords} searchArticles={BLoC.searchArticles.bind(this)} setKeyWordsHandler={BLoC.setKeyWordsHandler.bind(this)}></SearchComponent>
+            <SearchComponent BLoC={BLoC} keyWords={BLoC.keyWords} searchArticles={BLoC.searchArticles.bind(this)} setKeyWordsHandler={BLoC.setKeyWordsHandler}></SearchComponent>
         </View>
     );
 }
@@ -29,11 +28,11 @@ const width = Dimensions.get("screen").width;
 const styles = StyleSheet.create({
     header: {
         // flex: 1,
-        height: 100,
+        height: 80,
         flexDirection: "row",
         width: width,
         backgroundColor: ColorPalette.Burgundy,
-        paddingLeft: width/20,
+        paddingLeft: width/100*7,
         alignItems: 'center',
         justifyContent: 'flex-start',
     },

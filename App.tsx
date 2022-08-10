@@ -33,20 +33,13 @@ export default function App() {
 
 
     return (
-        // <View style={styles.container}>
-        //     <MainComponent></MainComponent>
-        // </View>
-
-
-        <>
             <NavigationContainer >
                 <Stack.Navigator initialRouteName="Home">
                     <Stack.Screen name="Main" component={MainComponent} options={{ headerShown: false }}/>
                     <Stack.Screen name="ArticleDetails" component={ArticleDetailsComponent} options={{}}/>
                 </Stack.Navigator>
+                <StatusBar style="light" backgroundColor={ColorPalette.Burgundy} translucent={false}/>
             </NavigationContainer>
-            <StatusBar style="light" backgroundColor={ColorPalette.Burgundy} translucent={false}/>
-        </>
     );
 }
 

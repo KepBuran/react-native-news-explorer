@@ -24,7 +24,7 @@ const SearchComponent: FC<SearchProps> = ({BLoC, keyWords, searchArticles, setKe
 
     return (
         <View style={styles.search}>
-            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}  value={BLoC.keyWords} onChangeText={BLoC.setKeyWordsHandler.bind(BLoC)}></TextInput>
+            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}  value={BLoC.keyWords} onChangeText={setKeyWordsHandler}></TextInput>
             <TouchableOpacity style={styles.searchButton} onPress={BLoC.searchArticles.bind(BLoC)}>
                 <ImageBackground style={styles.searchIcon} source={require('../../assets/icons/searchIcon.png')} resizeMode='contain'/>
             </TouchableOpacity>
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         backgroundColor: ColorPalette.SoftWhite,
         height: "50%",
-        width: "15%",
+        width: "13%",
         borderRadius: 20,
     },
 

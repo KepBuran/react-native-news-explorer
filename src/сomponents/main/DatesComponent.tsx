@@ -30,7 +30,7 @@ const DatesComponent: FC<DatesProps> = ({fromDate, toDate, setToDateHandler, set
 const styles = StyleSheet.create({
     dates: {
         width: "100%",
-        borderBottomWidth: 2,
+        borderTopWidth: 1,
         borderColor: ColorPalette.Burgundy,
     },
 
@@ -38,9 +38,9 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         width: "100%",
         height: 40,
-        borderBottomWidth: 2,
-        borderColor: ColorPalette.Burgundy,
-        backgroundColor: '#f5f2d0',
+        borderTopWidth: 1,
+        borderColor: ColorPalette.Black,
+        backgroundColor: ColorPalette.SoftWhite,
     },
 
     menuItemText: {

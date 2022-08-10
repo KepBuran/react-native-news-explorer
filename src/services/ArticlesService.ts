@@ -3,38 +3,62 @@ import {loadArticles, ILoadArticles} from "../api/ArticlesApi";
 import {runInAction} from "mobx";
 import {ErrorArticlesResponse} from "../models/ErrorArticlesResponse";
 import {SearchParameters, defaultSearchParameters} from "../models/SearchParameters";
+import {ArticlesResponse} from "../models/ArticlesResponse";
 
 
 export class ArticlesService {
     constructor(private readonly loadArticles: ILoadArticles) {}
 
+
+    saveData(response: ErrorArticlesResponse | ArticlesResponse) {
+        runInAction(() => {
+            if ('message' in response) {
+                console.log("Error", response.message)
+                articlesStore.error = response.message;
+                articlesStore.loading = false;
+                return;
+            }
+            articlesStore.error = "";
+            articlesStore.articlesAmount = response.totalResults;
+            console.log(response);
+            articlesStore.articles = response.articles;
+            articlesStore.loading = false;
+        });
+    }
+
+    updateData(response: ErrorArticlesResponse | ArticlesResponse) {
+        runInAction(() => {
+            if ('message' in response) {
+                console.log("Error", response.message)
+                articlesStore.error = response.message;
+                articlesStore.loading = false;
+                articlesStore.page = 1;
+                return;
+            }
+            articlesStore.error = "";
+            console.log(response);
+            articlesStore.articles = articlesStore.articles.concat(response.articles);
+            articlesStore.page = 1;
+            articlesStore.loading = false;
+        });
+    }
+
+
+
     async searchArticles(parameters: SearchParameters = defaultSearchParameters) {
+        articlesStore.loading = true;
+        articlesStore.prevParameters = parameters
+
         await loadArticles(this.buildParametersRequest(parameters))
              .then(response => {
-                 if (response) {
-                     runInAction(() => {
-                         if ('message' in response) {
-                             console.log("Error", response.message)
-                             articlesStore.error = response.message;
-                             return;
-                         }
-                         articlesStore.error = "";
-                         articlesStore.articlesAmount = response.totalResults;
-                         console.log(response);
-                         articlesStore.articles = response.articles;
-                     })
-                     return;
-                 }
-                 runInAction(() => {
-                     articlesStore.articlesAmount = 0;
-                     articlesStore.articles = [];
-                 })
+                 this.saveData(response);
              }).catch(err => {
                 runInAction(() => {
                     articlesStore.error = "Unknown error. Check your internet connection and try again";
                 });
             });
     }
+
 
 
     buildParametersRequest(parameters: SearchParameters): string {
@@ -48,4 +72,19 @@ export class ArticlesService {
         return parametersReq;
     }
 
+    async uploadMoreArticles() {
+        articlesStore.loading = true;
+        let parametersString = this.buildParametersRequest(articlesStore.prevParameters);
+        articlesStore.page += 1;
+        parametersString += "&page="+articlesStore.page;
+
+        await loadArticles(parametersString)
+            .then(response => {
+                this.updateData(response);
+            }).catch(err => {
+                runInAction(() => {
+                    articlesStore.error = "Unknown error. Check your internet connection and try again";
+                });
+            });
+    }
 }

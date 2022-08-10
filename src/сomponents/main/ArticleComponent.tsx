@@ -24,21 +24,23 @@ const ArticleComponent: FC<props> = ({article, navigate}) => {
 const styles = StyleSheet.create({
     article: {
         marginBottom: 40,
-        backgroundColor: ColorPalette.DustyRose,
+        backgroundColor: ColorPalette.Burgundy,
         borderRadius: 20,
         padding: 10,
         textAlign: "center",
         justifyContent: "center",
         alignItems: "center",
-
+        paddingBottom: 15,
     },
 
     title: {
         textAlign: "center",
         fontFamily: "Bold",
-        color: ColorPalette.Burgundy,
+        color: ColorPalette.SoftWhite,
         fontSize: 18,
-        paddingVertical: 5
+        paddingVertical: 5,
+        borderBottomWidth: 0.5,
+        borderColor: ColorPalette.SoftWhite
     },
 
     description: {
@@ -47,21 +49,23 @@ const styles = StyleSheet.create({
         marginBottom: 10,
         fontFamily: "Regular",
         textAlign: "justify",
-        fontSize: 14
+        fontSize: 14,
+        lineHeight: 20,
+        color: ColorPalette.SoftWhite
     },
 
     readMoreButton: {
         justifyContent: "center",
         width: "33%",
         height: 32,
-        backgroundColor: ColorPalette.Burgundy,
+        backgroundColor: ColorPalette.SoftWhite,
         borderRadius: 5
     },
 
     readMoreText: {
         textAlign: "center",
         fontWeight: '600',
-        color: ColorPalette.SoftWhite,
+        color: ColorPalette.Black,
         fontFamily: "SemiBold"
     }
 });
