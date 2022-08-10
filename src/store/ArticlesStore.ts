@@ -1,6 +1,5 @@
 import {makeAutoObservable} from "mobx";
 import {Article} from "../models/Article";
-import {ArticlesService} from "../services/ArticlesService";
 import {defaultSearchParameters, SearchParameters} from "../models/SearchParameters";
 
 

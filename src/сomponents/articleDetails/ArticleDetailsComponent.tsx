@@ -27,7 +27,6 @@ const ArticleDetailsComponent: FC<articleDetailsProps> = ({route, navigation}) =
 
     const checkAuthor = (author: string): string => author === null ? "Unknown" : author;
 
-
     return (
         <View style={styles.article}>
             <Image source={{uri: article.urlToImage}} resizeMode='cover' style={styles.articleImage}

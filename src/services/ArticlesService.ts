@@ -13,14 +13,12 @@ export class ArticlesService {
     saveData(response: ErrorArticlesResponse | ArticlesResponse) {
         runInAction(() => {
             if ('message' in response) {
-                console.log("Error", response.message)
                 articlesStore.error = response.message;
                 articlesStore.loading = false;
                 return;
             }
             articlesStore.error = "";
             articlesStore.articlesAmount = response.totalResults;
-            console.log(response);
             articlesStore.articles = response.articles;
             articlesStore.loading = false;
         });
@@ -29,14 +27,12 @@ export class ArticlesService {
     updateData(response: ErrorArticlesResponse | ArticlesResponse) {
         runInAction(() => {
             if ('message' in response) {
-                console.log("Error", response.message)
                 articlesStore.error = response.message;
                 articlesStore.loading = false;
                 articlesStore.page = 1;
                 return;
             }
             articlesStore.error = "";
-            console.log(response);
             articlesStore.articles = articlesStore.articles.concat(response.articles);
             articlesStore.page = 1;
             articlesStore.loading = false;
@@ -59,19 +55,6 @@ export class ArticlesService {
             });
     }
 
-
-
-    buildParametersRequest(parameters: SearchParameters): string {
-        let parametersReq: string = "?";
-        parametersReq += "apiKey="+parameters.apiKey;
-        parametersReq += parameters.sortBy ? "&sortBy="+parameters.sortBy : "";
-        parametersReq += parameters.keyWords ? "&q="+parameters.keyWords : "";
-        parametersReq += parameters.fromDate ? "&from="+parameters.fromDate.toJSON().slice(0, 10) : "";
-        parametersReq += parameters.toDate ? "&to="+parameters.toDate.toJSON().slice(0, 10) : "";
-        parametersReq += parameters.pageSize ? "&pageSize="+parameters.pageSize : "";
-        return parametersReq;
-    }
-
     async uploadMoreArticles() {
         articlesStore.loading = true;
         let parametersString = this.buildParametersRequest(articlesStore.prevParameters);
@@ -87,4 +70,17 @@ export class ArticlesService {
                 });
             });
     }
+
+
+    buildParametersRequest(parameters: SearchParameters): string {
+        let parametersReq: string = "?";
+        parametersReq += "apiKey="+parameters.apiKey;
+        parametersReq += parameters.sortBy ? "&sortBy="+parameters.sortBy : "";
+        parametersReq += parameters.keyWords ? "&q="+parameters.keyWords : "";
+        parametersReq += parameters.fromDate ? "&from="+parameters.fromDate.toJSON().slice(0, 10) : "";
+        parametersReq += parameters.toDate ? "&to="+parameters.toDate.toJSON().slice(0, 10) : "";
+        parametersReq += parameters.pageSize ? "&pageSize="+parameters.pageSize : "";
+        return parametersReq;
+    }
+
 }

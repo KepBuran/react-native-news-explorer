@@ -22,7 +22,7 @@ export class SearchBLoC {
         makeAutoObservable(this);
     }
 
-    searchArticles() {
+    searchArticles = () => {
         this.articlesService.searchArticles(this.buildSearchParameters());
     }
 

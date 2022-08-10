@@ -33,7 +33,6 @@ const styles = StyleSheet.create({
         height: 40,
         borderBottomWidth: 0.5,
         borderColor: ColorPalette.Black,
-        // backgroundColor: ColorPalette.DustyRose,
     },
 
     activeMenuItem: {

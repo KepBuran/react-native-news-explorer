@@ -1,5 +1,5 @@
 import {FC, useState} from 'react';
-import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
+import {ImageBackground, StyleSheet, TouchableOpacity, View} from "react-native";
 import {ColorPalette} from "../ColorPalette";
 import {SortBy} from "../../models/SortBy";
 import {observer} from "mobx-react-lite";
@@ -17,9 +17,7 @@ interface SortProps {
 
 
 const SortMenuComponent: FC<SortProps> = ({setFromDateHandler, setToDateHandler, setSortByHandler ,sortBy, fromDate,toDate}) => {
-
     const [visible, setVisible] = useState(false);
-
     const toggleDropdown = () => {
         setVisible(!visible);
     };
@@ -29,33 +27,26 @@ const SortMenuComponent: FC<SortProps> = ({setFromDateHandler, setToDateHandler,
             {visible && <DropDownMenuComponent setSortByHandler={setSortByHandler}
                                                setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}
                                                sortBy={sortBy} toDate={toDate} fromDate={fromDate}/>}
-            <ImageBackground style={{...styles.buttonIcon, ...{}}} source={require('../../assets/icons/sortBy.png')} resizeMode='contain'/>
+            <ImageBackground style={styles.buttonIcon} source={require('../../assets/icons/sortBy.png')} resizeMode='contain'/>
         </TouchableOpacity>
     );
 }
 
-interface DropDownMenuProps {
-    sortBy: SortBy,
-    fromDate: Date,
-    toDate: Date,
-    setSortByHandler: (element: SortBy) => void,
-    setFromDateHandler: (date: Date | undefined) => void,
-    setToDateHandler: (date: Date | undefined) => void,
-}
 
-const DropDownMenuComponent: FC<DropDownMenuProps> = observer(({setFromDateHandler, setToDateHandler, setSortByHandler, sortBy, fromDate,toDate}) => {
+const DropDownMenuComponent: FC<SortProps> = observer(({setFromDateHandler, setToDateHandler, setSortByHandler, sortBy, fromDate,toDate}) => {
 
-              return (<View style={styles.dropdown}>
-                          {Object.values(SortBy).map((element, index) => {
-                              const isActive = (sortByElement: SortBy) => {
-                                      return sortBy === sortByElement;
-                              };
-
-                              return <CategoryComponent  setSortByHandler={setSortByHandler}  sortBy={sortBy} element={element} elementIndex={index} isActive={isActive(element)}></CategoryComponent>
-                          })}
-                         <DatesComponent fromDate={fromDate} toDate={toDate} setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}></DatesComponent>
-                      </View>)
-          });
+    return (
+        <View style={styles.dropdown}>
+            {Object.values(SortBy).map((element, index) => {
+                const isActive = (sortByElement: SortBy) => {
+                    return sortBy === sortByElement;
+                };
+                return <CategoryComponent  setSortByHandler={setSortByHandler}  sortBy={sortBy} element={element} elementIndex={index} isActive={isActive(element)}></CategoryComponent>
+            })}
+            <DatesComponent fromDate={fromDate} toDate={toDate} setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}></DatesComponent>
+        </View>
+    )
+});
 
 
 const styles = StyleSheet.create({

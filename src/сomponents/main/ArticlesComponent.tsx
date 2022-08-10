@@ -21,11 +21,10 @@ const ArticlesComponent: FC<articlesProps> = ({navigate}) => {
     const scrollRef = useRef(null);
 
     useEffect( () => {
-            console.log("USEEFFECT", BLoC.scrollPosition )
             // @ts-ignore
             scrollRef.current.scrollTo({ x: 0, y: BLoC.scrollPosition, animated: false });
             BLoC.scrollPosition = 0;
-        },[articlesStore.articles])
+        },[articlesStore.articles]);
 
     const checkConditions = (): ReactElement => {
         if (articlesStore.loading)
@@ -34,9 +33,8 @@ const ArticlesComponent: FC<articlesProps> = ({navigate}) => {
         if (articlesStore.error)
             return <ErrorArticlesComponent/>
 
-
         return <ValidArticlesComponent navigate={navigate}/>
-    }
+    };
 
     return (
         <ScrollView style={styles.articles}  ref={scrollRef}
