@@ -6,4 +6,5 @@ export interface Article{
     source: {id: number, name: string};
     publishedAt: string;
     url: string;
+    content: string;
 }
