@@ -13,7 +13,6 @@ export class SearchBLoC {
 
 
     constructor(private readonly articlesService: ArticlesService) {
-        makeAutoObservable(this);
         console.log("CONSTRUCTOR SEARCH BLOC")
         this.apiKey = defaultSearchParameters.apiKey;
         this.keyWords = defaultSearchParameters.keyWords;
@@ -21,14 +20,15 @@ export class SearchBLoC {
         this.toDate = defaultSearchParameters.toDate;
         this.sortBy = defaultSearchParameters.sortBy;
         this.pageSize  = defaultSearchParameters.pageSize;
+        makeAutoObservable(this);
     }
 
-    setKeyWords(keyWords: string) {
+    setKeyWordsHandler(keyWords: string) {
+        console.log("keyWords value",keyWords);
         runInAction(() => this.keyWords = keyWords);
     }
 
-    setSortByHandler(sortBy: string) {
-        console.log("sortBy value",sortBy);
+    setSortByHandler(sortBy: SortBy) {
         runInAction(() => this.sortBy = sortBy);
     }
 

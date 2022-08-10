@@ -1,20 +1,23 @@
-import React, {FC} from 'react';
+import React, {FC, useCallback} from 'react';
 import {StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {ColorPalette} from "../ColorPalette";
-
+import {Article} from "../../models/Article";
 
 interface props {
-    title: string,
-    description: string
+    article: Article,
+    navigate: (page:string, article:Article) => void;
 }
 
-const ArticleComponent: FC<props> = ({title, description}) => {
+const ArticleComponent: FC<props> = ({article, navigate}) => {
+    const readMoreHandler = useCallback(() => navigate('ArticleDetails', article), []);
+
+
     return (
-        <View style={styles.article}>
-            <Text style={styles.title}>{title}</Text>
-            <Text style={styles.description}>{description}</Text>
-            <TouchableOpacity style={styles.readMoreButton}><Text style={styles.readMoreText}>Read more...</Text></TouchableOpacity>
-        </View>
+            <View style={styles.article}>
+                    <Text style={styles.title}>{article.title}</Text>
+                    <Text style={styles.description}>{article.description}</Text>
+                    <TouchableOpacity style={styles.readMoreButton}><Text style={styles.readMoreText} onPress={readMoreHandler}>Read more...</Text></TouchableOpacity>
+            </View>
     );
 };
 
@@ -26,7 +29,8 @@ const styles = StyleSheet.create({
         padding: 10,
         textAlign: "center",
         justifyContent: "center",
-        alignItems: "center"
+        alignItems: "center",
+
     },
 
     title: {

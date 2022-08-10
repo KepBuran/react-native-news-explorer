@@ -1,18 +1,32 @@
 import { StatusBar } from 'expo-status-bar';
-import {Dimensions, StyleSheet, Text, View} from 'react-native';
-import ArticlesComponentObserver from "./ArticlesComponent";
-import HeaderComponentObserver from "./HeaderComponent";
+import {Button, Dimensions, StyleSheet, Text, View} from 'react-native';
+import ArticlesComponent from "./ArticlesComponent";
+import HeaderComponent from "./HeaderComponent";
+import {NavigationProp} from '@react-navigation/native';
+import {FC} from "react";
+import {ColorPalette} from "../ColorPalette";
 
+interface mainProps {
+    navigation: NavigationProp<any>;
+}
 
-const MainComponent = () => {
+const MainComponent: FC<mainProps> = ({navigation}) => {
     return (
-        <View>
-            <HeaderComponentObserver></HeaderComponentObserver>
-            <ArticlesComponentObserver></ArticlesComponentObserver>
+        <View style={styles.main}>
+            <HeaderComponent></HeaderComponent>
+            <ArticlesComponent navigate={navigation.navigate}></ArticlesComponent>
         </View>
     );
 }
 
-const styles = {};
+const styles = StyleSheet.create({
+    main: {
+        flex: 1,
+        backgroundColor: ColorPalette.DustyRose,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+
+});
 
 export default MainComponent;

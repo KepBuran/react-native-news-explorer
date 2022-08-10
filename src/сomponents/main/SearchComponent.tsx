@@ -6,21 +6,25 @@ import {
     TouchableOpacity,
 } from "react-native";
 import {ColorPalette} from "../ColorPalette";
-import {SearchBLoC} from "../../BLoCs/SearchBLoC";
 import {FC} from "react";
 import {observer} from "mobx-react-lite";
+import {SearchBLoC} from "../../BLoCs/SearchBLoC";
 
 
 interface SearchProps {
     BLoC: SearchBLoC,
+    keyWords: string,
+    searchArticles: () => void,
+    setKeyWordsHandler: (value: string) => void
 }
 
 
-const SearchComponent: FC<SearchProps> = ({BLoC}) => {
-    const {keyWords} = BLoC;
+const SearchComponent: FC<SearchProps> = ({BLoC, keyWords, searchArticles, setKeyWordsHandler}) => {
+    console.log("SearchComponent# keyWords",keyWords);
+
     return (
         <View style={styles.search}>
-            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."} value={keyWords} onChangeText={BLoC.setKeyWords}></TextInput>
+            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}  value={BLoC.keyWords} onChangeText={BLoC.setKeyWordsHandler.bind(BLoC)}></TextInput>
             <TouchableOpacity style={styles.searchButton} onPress={BLoC.searchArticles.bind(BLoC)}>
                 <ImageBackground style={styles.searchIcon} source={require('../../assets/icons/searchIcon.png')} resizeMode='contain'/>
             </TouchableOpacity>
@@ -63,8 +67,6 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         width: "100%",
         height: "100%",
-        // width: 32,
-        // height: 32,
         backgroundColor: ColorPalette.SoftWhite,
     }
 

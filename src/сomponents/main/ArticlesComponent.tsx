@@ -2,22 +2,25 @@ import {ScrollView, StyleSheet, Text} from "react-native";
 import ArticleComponent from "./ArticleComponent";
 
 import {observer} from "mobx-react-lite";
-import {observe} from "mobx";
-import {useEffect, useState} from "react";
+import {FC} from "react";
 import articlesStore from "../../store/ArticlesStore";
-import {ArticlesService} from "../../services/ArticlesService";
+import {Article} from "../../models/Article";
 
 
-const ArticlesComponent = observer(() => {
+interface articlesProps {
+    navigate: (page:string, article:Article) => void;
+}
+
+
+const ArticlesComponent: FC<articlesProps> = ({navigate}) => {
     return (
         <ScrollView style={styles.articles}>
             <Text style={styles.articlesAmount}> Articles found: {articlesStore.articlesAmount}</Text>
-            {articlesStore.articles.map((article, index) => <ArticleComponent key={index} title={article.title} description={article.description}/>)}
+            {articlesStore.articles.map((article, index) => <ArticleComponent key={article.url} navigate={navigate} article={article}/>)}
         </ScrollView>
     );
-});
+};
 
-// const ArticlesComponentObserver = observer(ArticlesComponent);
 
 const styles = StyleSheet.create({
     articles: {
@@ -36,4 +39,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default ArticlesComponent;
+export default observer(ArticlesComponent);

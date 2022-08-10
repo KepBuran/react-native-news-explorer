@@ -33,7 +33,6 @@ export class ArticlesService {
         parametersReq += parameters.fromDate ? "&from="+parameters.fromDate.toJSON().slice(0, 10) : "";
         parametersReq += parameters.toDate ? "&to="+parameters.toDate.toJSON().slice(0, 10) : "";
         parametersReq += parameters.pageSize ? "&pageSize="+parameters.pageSize : "";
-        parametersReq += "&domains=bbc.co.uk";
         return parametersReq;
     }
 
