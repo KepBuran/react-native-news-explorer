@@ -1,4 +1,4 @@
-# React Native New Explorer 
+# React Native News Explorer 
 Build with [newsapi.org](https://newsapi.org)
 
 
