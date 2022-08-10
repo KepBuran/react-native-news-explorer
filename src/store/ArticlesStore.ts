@@ -7,11 +7,13 @@ import {ArticlesService} from "../services/ArticlesService";
 class ArticlesStore {
     private _articlesAmount = 0;
     private _articles: Article[] = [];
+    private _error: String;
 
     constructor() {
-        makeAutoObservable(this);
         this._articles = [];
+        this._error = "";
         this._articlesAmount = this.articles.length;
+        makeAutoObservable(this);
     }
 
 
@@ -23,6 +25,14 @@ class ArticlesStore {
         this._articlesAmount = value;
     }
 
+
+    get error(): String {
+        return this._error;
+    }
+
+    set error(value: String) {
+        this._error = value;
+    }
 
     get articles(): Article[] {
         return this._articles;

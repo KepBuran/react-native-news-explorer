@@ -1,9 +1,9 @@
 import {Dimensions, StyleSheet, View} from "react-native";
 import {ColorPalette} from "../ColorPalette";
-import SortMenuComponentObserver from "./SortMenuComponent";
+import SortMenuComponent from "./SortMenuComponent";
 import SearchComponent from "./SearchComponent";
 import articlesStore from "../../store/ArticlesStore";
-import {useEffect, useMemo} from "react";
+import {useMemo} from "react";
 import {ArticlesService} from "../../services/ArticlesService";
 import {loadArticles} from "../../api/ArticlesApi";
 import {SearchBLoC} from "../../BLoCs/SearchBLoC";
@@ -16,7 +16,8 @@ const HeaderComponent = () => {
 
     return (
         <View style={styles.header}>
-            <SortMenuComponentObserver setSortByHandler={BLoC.setSortByHandler.bind(BLoC)}  sortBy={BLoC.sortBy} toDate={BLoC.toDate} fromDate={BLoC.fromDate}></SortMenuComponentObserver>
+            <SortMenuComponent setSortByHandler={BLoC.setSortByHandler.bind(BLoC)} setFromDateHandler={BLoC.setFromDateHandler.bind(BLoC)} setToDateHandler={BLoC.setToDateHandler.bind(BLoC)}
+                                       sortBy={BLoC.sortBy} toDate={BLoC.toDate} fromDate={BLoC.fromDate} ></SortMenuComponent>
             <SearchComponent BLoC={BLoC} keyWords={BLoC.keyWords} searchArticles={BLoC.searchArticles.bind(this)} setKeyWordsHandler={BLoC.setKeyWordsHandler.bind(this)}></SearchComponent>
         </View>
     );

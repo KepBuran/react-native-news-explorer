@@ -22,7 +22,7 @@ const MainComponent: FC<mainProps> = ({navigation}) => {
 const styles = StyleSheet.create({
     main: {
         flex: 1,
-        backgroundColor: ColorPalette.DustyRose,
+        backgroundColor: ColorPalette.SoftWhite,
         alignItems: 'center',
         justifyContent: 'center',
     },

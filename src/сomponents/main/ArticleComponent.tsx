@@ -24,7 +24,7 @@ const ArticleComponent: FC<props> = ({article, navigate}) => {
 const styles = StyleSheet.create({
     article: {
         marginBottom: 40,
-        backgroundColor: ColorPalette.SoftWhite,
+        backgroundColor: ColorPalette.DustyRose,
         borderRadius: 20,
         padding: 10,
         textAlign: "center",

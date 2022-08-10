@@ -16,12 +16,6 @@ interface CategoryProps {
 }
 
 const CategoryComponent: FC<CategoryProps> = ({setSortByHandler, sortBy, element, elementIndex, isActive}) => {
-//     console.log("CategoryComponent render")
-
-//     const isActive = (sortByElement: SortBy) => {
-//         console.log("CategoryComponent#",element,"  BLoC.sortBy",BLoC.sortBy);
-//         return BLoC.sortBy === sortByElement ? styles.activeMenuItem : styles.menuItem
-//         };
 
     const pressHandler = useCallback(() => setSortByHandler(element), [element]);
 

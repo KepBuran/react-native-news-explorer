@@ -1,20 +1,27 @@
 import articlesStore from "../store/ArticlesStore";
 import {loadArticles, ILoadArticles} from "../api/ArticlesApi";
 import {runInAction} from "mobx";
+import {ErrorArticlesResponse} from "../models/ErrorArticlesResponse";
 import {SearchParameters, defaultSearchParameters} from "../models/SearchParameters";
 
 
 export class ArticlesService {
     constructor(private readonly loadArticles: ILoadArticles) {}
 
-    searchArticles(parameters: SearchParameters = defaultSearchParameters) {
-        loadArticles(this.buildParametersRequest(parameters))
-             .then(articlesResponse => {
-                 if (articlesResponse) {
+    async searchArticles(parameters: SearchParameters = defaultSearchParameters) {
+        await loadArticles(this.buildParametersRequest(parameters))
+             .then(response => {
+                 if (response) {
                      runInAction(() => {
-                         articlesStore.articlesAmount = articlesResponse.totalResults;
-                         console.log(articlesResponse);
-                         articlesStore.articles = articlesResponse.articles;
+                         if ('message' in response) {
+                             console.log("Error", response.message)
+                             articlesStore.error = response.message;
+                             return;
+                         }
+                         articlesStore.error = "";
+                         articlesStore.articlesAmount = response.totalResults;
+                         console.log(response);
+                         articlesStore.articles = response.articles;
                      })
                      return;
                  }
@@ -22,8 +29,13 @@ export class ArticlesService {
                      articlesStore.articlesAmount = 0;
                      articlesStore.articles = [];
                  })
-             });
+             }).catch(err => {
+                runInAction(() => {
+                    articlesStore.error = "Unknown error. Check your internet connection and try again";
+                });
+            });
     }
+
 
     buildParametersRequest(parameters: SearchParameters): string {
         let parametersReq: string = "?";

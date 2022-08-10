@@ -1,10 +1,8 @@
-import {FC, ReactElement, useState} from 'react';
+import {FC, useState} from 'react';
 import {ImageBackground, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {ColorPalette} from "../ColorPalette";
 import {SortBy} from "../../models/SortBy";
-import {SearchBLoC} from "../../BLoCs/SearchBLoC";
 import {observer} from "mobx-react-lite";
-import {runInAction} from "mobx";
 import DatesComponent from "./DatesComponent";
 import CategoryComponent from "./CategoryComponent";
 
@@ -12,11 +10,13 @@ interface SortProps {
     sortBy: SortBy,
     fromDate: Date,
     toDate: Date,
-    setSortByHandler: (element: SortBy) => void
+    setSortByHandler: (element: SortBy) => void,
+    setFromDateHandler: (date: Date | undefined) => void,
+    setToDateHandler: (date: Date | undefined) => void,
 }
 
 
-const SortMenuComponent: FC<SortProps> = ({setSortByHandler ,sortBy, fromDate,toDate}) => {
+const SortMenuComponent: FC<SortProps> = ({setFromDateHandler, setToDateHandler, setSortByHandler ,sortBy, fromDate,toDate}) => {
 
     const [visible, setVisible] = useState(false);
 
@@ -26,7 +26,9 @@ const SortMenuComponent: FC<SortProps> = ({setSortByHandler ,sortBy, fromDate,to
 
     return (
         <TouchableOpacity style={visible ? styles.buttonPressed : styles.button}  onPress={toggleDropdown}>
-            {visible && <DropDownMenuComponent setSortByHandler={setSortByHandler} sortBy={sortBy} toDate={toDate} fromDate={fromDate}/>}
+            {visible && <DropDownMenuComponent setSortByHandler={setSortByHandler}
+                                               setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}
+                                               sortBy={sortBy} toDate={toDate} fromDate={fromDate}/>}
             <ImageBackground style={{...styles.buttonIcon, ...{}}} source={require('../../assets/icons/sortBy.png')} resizeMode='contain'/>
         </TouchableOpacity>
     );
@@ -36,26 +38,25 @@ interface DropDownMenuProps {
     sortBy: SortBy,
     fromDate: Date,
     toDate: Date,
-    setSortByHandler: (element: SortBy) => void
+    setSortByHandler: (element: SortBy) => void,
+    setFromDateHandler: (date: Date | undefined) => void,
+    setToDateHandler: (date: Date | undefined) => void,
 }
 
-const DropDownMenuComponent: FC<DropDownMenuProps> = observer(({setSortByHandler, sortBy, fromDate,toDate}) => {
+const DropDownMenuComponent: FC<DropDownMenuProps> = observer(({setFromDateHandler, setToDateHandler, setSortByHandler, sortBy, fromDate,toDate}) => {
 
               return (<View style={styles.dropdown}>
                           {Object.values(SortBy).map((element, index) => {
                               const isActive = (sortByElement: SortBy) => {
-                                      console.log("CategoryComponent#",element,"  BLoC.sortBy",sortBy);
                                       return sortBy === sortByElement;
-                                      };
+                              };
 
                               return <CategoryComponent  setSortByHandler={setSortByHandler}  sortBy={sortBy} element={element} elementIndex={index} isActive={isActive(element)}></CategoryComponent>
                           })}
-                         <DatesComponent></DatesComponent>
-
+                         <DatesComponent fromDate={fromDate} toDate={toDate} setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}></DatesComponent>
                       </View>)
           });
 
-const SortMenuComponentObserver = observer(SortMenuComponent);
 
 const styles = StyleSheet.create({
     button: {
@@ -76,6 +77,8 @@ const styles = StyleSheet.create({
         width: "15%",
         backgroundColor: ColorPalette.SoftWhite,
         marginRight: "5%",
+        borderWidth: 2,
+        borderColor: ColorPalette.Black,
         borderTopLeftRadius: 20,
         borderTopRightRadius: 20,
         zIndex: 1,
@@ -96,8 +99,10 @@ const styles = StyleSheet.create({
     dropdown: {
         position: 'absolute',
         backgroundColor: ColorPalette.SoftWhite,
+        borderWidth: 3,
         borderColor: ColorPalette.Black,
-        top: 50,
+        top: 48,
+        left: -2,
         width: "300%",
         justifyContent: "center",
         alignItems: "center",
@@ -106,4 +111,4 @@ const styles = StyleSheet.create({
     },
 });
 
-export default SortMenuComponentObserver;
+export default observer(SortMenuComponent);

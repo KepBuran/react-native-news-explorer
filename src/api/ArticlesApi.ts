@@ -1,17 +1,28 @@
 import {ArticlesResponse} from "../models/ArticlesResponse";
+import {ErrorArticlesResponse} from "../models/ErrorArticlesResponse";
+
+
 
 export interface ILoadArticles {
-    (parameters: string): Promise<void | ArticlesResponse>
+    (parameters: string): Promise<ErrorArticlesResponse | ArticlesResponse>
 }
 
-export const loadArticles: ILoadArticles = (parameters: string) => {
+export const loadArticles: ILoadArticles = async (parameters: string) => {
         const domain: string = "https://newsapi.org/v2/everything";
         let url: string = domain+parameters;
         console.log(url);
 
-        return fetch(url).then(response => response)
-            .then(response => response.json())
-            .then(data => data as ArticlesResponse)
-            .catch(err => console.log(err));
+        let response = await fetch(url);
+
+        if(!response.ok) {
+            return await response.json() as ErrorArticlesResponse;
+        }
+
+        let objectResponse = await response.json();
+        return objectResponse as ArticlesResponse;
 }
 
+// fetch(url).then(response => response)
+//     .then(response => response.json())
+//     .then(data => data as ArticlesResponse)
+//     .catch(err => {throw new Error(err);});
