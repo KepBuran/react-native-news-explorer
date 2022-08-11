@@ -26,6 +26,10 @@ export class SearchBLoC {
         this.articlesService.searchArticles(this.buildSearchParameters());
     }
 
+    updateArticles = () => {
+        this.articlesService.updateArticles(this.buildSearchParameters());
+    }
+
     buildSearchParameters() : SearchParameters {
         return {
             apiKey: this._apiKey,

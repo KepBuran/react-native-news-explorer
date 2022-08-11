@@ -15,8 +15,8 @@ const HeaderComponent = () => {
     return (
         <View style={styles.header}>
             <SortMenuComponent setSortByHandler={BLoC.setSortByHandler.bind(BLoC)} setFromDateHandler={BLoC.setFromDateHandler} setToDateHandler={BLoC.setToDateHandler}
-                                       sortBy={BLoC.sortBy} toDate={BLoC.toDate} fromDate={BLoC.fromDate} ></SortMenuComponent>
-            <SearchComponent keyWords={BLoC.keyWords} searchArticles={BLoC.searchArticles.bind(this)} setKeyWordsHandler={BLoC.setKeyWordsHandler}></SearchComponent>
+                                       sortBy={BLoC.sortBy} toDate={BLoC.toDate} fromDate={BLoC.fromDate} searchArticles={BLoC.searchArticles} ></SortMenuComponent>
+            <SearchComponent keyWords={BLoC.keyWords} searchArticles={BLoC.searchArticles} setKeyWordsHandler={BLoC.setKeyWordsHandler} updateArticles={BLoC.updateArticles}></SearchComponent>
         </View>
     );
 }

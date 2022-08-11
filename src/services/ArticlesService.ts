@@ -40,20 +40,27 @@ export class ArticlesService {
     }
 
 
-
-    async searchArticles(parameters: SearchParameters = defaultSearchParameters) {
+    async updateArticles(parameters: SearchParameters = defaultSearchParameters) {
         articlesStore.loading = true;
         articlesStore.prevParameters = parameters
 
         await loadArticles(this.buildParametersRequest(parameters))
-             .then(response => {
-                 this.saveData(response);
-             }).catch(err => {
+            .then(response => {
+                this.saveData(response);
+            }).catch(err => {
                 runInAction(() => {
                     articlesStore.error = "Unknown error. Check your internet connection and try again";
                 });
             });
+
     }
+
+    async searchArticles(parameters: SearchParameters = defaultSearchParameters) {
+        if (articlesStore.prevParameters === parameters) return;
+        await this.updateArticles(parameters);
+    }
+
+
 
     async uploadMoreArticles() {
         articlesStore.loading = true;

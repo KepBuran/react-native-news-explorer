@@ -13,18 +13,18 @@ import {SearchBLoC} from "../../BLoCs/SearchBLoC";
 
 interface SearchProps {
     keyWords: string,
+    setKeyWordsHandler: (value: string) => void,
     searchArticles: () => void,
-    setKeyWordsHandler: (value: string) => void
+    updateArticles: () => void;
 }
 
 
-const SearchComponent: FC<SearchProps> = ({keyWords, searchArticles, setKeyWordsHandler}) => {
-    console.log("SearchComponent# keyWords",keyWords);
+const SearchComponent: FC<SearchProps> = ({keyWords, setKeyWordsHandler, searchArticles, updateArticles}) => {
 
     return (
         <View style={styles.search}>
-            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}  value={keyWords} onChangeText={setKeyWordsHandler}></TextInput>
-            <TouchableOpacity style={styles.searchButton} onPress={searchArticles}>
+            <TextInput style={styles.searchInput} placeholder={"Search by keyword..."}  value={keyWords} onChangeText={setKeyWordsHandler} onEndEditing={searchArticles}></TextInput>
+            <TouchableOpacity style={styles.searchButton} onPress={updateArticles}>
                 <ImageBackground style={styles.searchIcon} source={require('../../assets/icons/searchIcon.png')} resizeMode='contain'/>
             </TouchableOpacity>
         </View>

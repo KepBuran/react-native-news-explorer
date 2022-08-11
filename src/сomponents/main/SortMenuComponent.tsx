@@ -13,10 +13,11 @@ interface SortProps {
     setSortByHandler: (element: SortBy) => void,
     setFromDateHandler: (date: Date | undefined) => void,
     setToDateHandler: (date: Date | undefined) => void,
+    searchArticles: () => void;
 }
 
 
-const SortMenuComponent: FC<SortProps> = ({setFromDateHandler, setToDateHandler, setSortByHandler ,sortBy, fromDate,toDate}) => {
+const SortMenuComponent: FC<SortProps> = ({searchArticles ,setFromDateHandler, setToDateHandler, setSortByHandler ,sortBy, fromDate,toDate}) => {
     const [visible, setVisible] = useState(false);
     const toggleDropdown = () => {
         setVisible(!visible);
@@ -24,7 +25,7 @@ const SortMenuComponent: FC<SortProps> = ({setFromDateHandler, setToDateHandler,
 
     return (
         <TouchableOpacity style={visible ? styles.buttonPressed : styles.button}  onPress={toggleDropdown}>
-            {visible && <DropDownMenuComponent setSortByHandler={setSortByHandler}
+            {visible && <DropDownMenuComponent setSortByHandler={setSortByHandler} searchArticles={searchArticles}
                                                setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}
                                                sortBy={sortBy} toDate={toDate} fromDate={fromDate}/>}
             <ImageBackground style={styles.buttonIcon} source={require('../../assets/icons/sortBy.png')} resizeMode='contain'/>
@@ -33,7 +34,7 @@ const SortMenuComponent: FC<SortProps> = ({setFromDateHandler, setToDateHandler,
 }
 
 
-const DropDownMenuComponent: FC<SortProps> = observer(({setFromDateHandler, setToDateHandler, setSortByHandler, sortBy, fromDate,toDate}) => {
+const DropDownMenuComponent: FC<SortProps> = observer(({searchArticles, setFromDateHandler, setToDateHandler, setSortByHandler, sortBy, fromDate,toDate}) => {
 
     return (
         <View style={styles.dropdown}>
@@ -41,9 +42,9 @@ const DropDownMenuComponent: FC<SortProps> = observer(({setFromDateHandler, setT
                 const isActive = (sortByElement: SortBy) => {
                     return sortBy === sortByElement;
                 };
-                return <CategoryComponent  setSortByHandler={setSortByHandler}  sortBy={sortBy} element={element} elementIndex={index} isActive={isActive(element)}></CategoryComponent>
+                return <CategoryComponent  setSortByHandler={setSortByHandler}  sortBy={sortBy} element={element} elementIndex={index} isActive={isActive(element)} searchArticles={searchArticles}></CategoryComponent>
             })}
-            <DatesComponent fromDate={fromDate} toDate={toDate} setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler}></DatesComponent>
+            <DatesComponent fromDate={fromDate} toDate={toDate} setFromDateHandler={setFromDateHandler} setToDateHandler={setToDateHandler} searchArticles={searchArticles}></DatesComponent>
         </View>
     )
 });

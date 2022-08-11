@@ -12,12 +12,13 @@ interface CategoryProps {
     sortBy: SortBy,
     element: SortBy,
     elementIndex: number,
-    setSortByHandler: (element: SortBy) => void
+    setSortByHandler: (element: SortBy) => void,
+    searchArticles: () => void;
 }
 
-const CategoryComponent: FC<CategoryProps> = ({setSortByHandler, sortBy, element, elementIndex, isActive}) => {
+const CategoryComponent: FC<CategoryProps> = ({setSortByHandler, sortBy, element, elementIndex, isActive, searchArticles}) => {
 
-    const pressHandler = useCallback(() => setSortByHandler(element), [element]);
+    const pressHandler = useCallback(() => {setSortByHandler(element); searchArticles();}, [element]);
 
     return (
         <TouchableOpacity key={elementIndex} style={isActive ? styles.activeMenuItem: styles.menuItem} onPress={pressHandler}>
