@@ -21,7 +21,7 @@ export default function App() {
     const [fontsLoaded] = useFonts({ExtraLight: Raleway_200ExtraLight, Light: Raleway_300Light, Regular: Raleway_400Regular, Bold: Raleway_700Bold, SemiBold: Raleway_600SemiBold});
 
     useEffect(() => {
-        new ArticlesService(loadArticles).searchArticles();
+        new ArticlesService(loadArticles).updateArticles();
     }, []);
 
     if (!fontsLoaded) {
