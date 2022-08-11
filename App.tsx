@@ -16,7 +16,6 @@ import {loadArticles} from "./src/api/ArticlesApi";
 import {NavigationContainer, Route} from "@react-navigation/native";
 import {createNativeStackNavigator} from "@react-navigation/native-stack";
 import ArticleDetailsComponent from "./src/сomponents/articleDetails/ArticleDetailsComponent";
-import { Article } from './src/models/Article';
 
 export default function App() {
     const [fontsLoaded] = useFonts({ExtraLight: Raleway_200ExtraLight, Light: Raleway_300Light, Regular: Raleway_400Regular, Bold: Raleway_700Bold, SemiBold: Raleway_600SemiBold});
