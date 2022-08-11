@@ -4,6 +4,7 @@ import {runInAction} from "mobx";
 import {ErrorArticlesResponse} from "../models/ErrorArticlesResponse";
 import {SearchParameters, defaultSearchParameters} from "../models/SearchParameters";
 import {ArticlesResponse} from "../models/ArticlesResponse";
+import {deepEqual} from "mobx/dist/utils/eq";
 
 
 export class ArticlesService {
@@ -55,11 +56,11 @@ export class ArticlesService {
 
     }
 
+
     async searchArticles(parameters: SearchParameters = defaultSearchParameters) {
-        if (articlesStore.prevParameters === parameters) return;
+        if (deepEqual(articlesStore.prevParameters, parameters)) return;
         await this.updateArticles(parameters);
     }
-
 
 
     async uploadMoreArticles() {
